@@ -1,36 +1,29 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Scroll-Driven Hero Animation
 
-## Getting Started
+A high-performance, responsive, scroll-driven hero section built with Next.js (App Router), Tailwind CSS, and GSAP. 
 
-First, run the development server:
+Live Demo: [GitHub Pages Link Here]
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features & Animation Decisions
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Intro Sequence**: Handled via `useHeroIntro.ts` which uses a GSAP timeline to gracefully stagger the headline characters, stat items, and the car visual upon page load.
+- **Scroll-Driven Parallax**: Handled via `useHeroScroll.ts`. The hero section is pinned using GSAP's `ScrollTrigger`, and as the user scrubs down the page, the car scales and translates out while the typography fades away dynamically.
+- **Performance Optimized**: We strictly animate `transform` and `opacity` properties using hardware acceleration (`will-change: transform`) avoiding expensive repaints and reflows. 
+- **Accessibility & UX**: All motion respects `prefers-reduced-motion` settings. The staggered letter headline remains fully accessible to screen readers using ARIA labels, while splitting the letters visually for GSAP.
+- **Static Export**: The project is configured for GitHub Pages using `output: "export"`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Local Setup
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Start the development server:
+   ```bash
+   npm run dev
+   ```
+3. Open `http://localhost:3000` to view the animation.
 
-## Learn More
+## Deployment
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This repository includes a GitHub Actions workflow (`.github/workflows/deploy.yml`) that automatically builds and deploys the `out/` directory to GitHub Pages upon pushing to `main`.
